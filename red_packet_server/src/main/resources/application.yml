@@ -1,0 +1,40 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: red_package
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  data:
+    #单机
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+      timeout: 1800000
+      password:
+      lettuce:
+        pool:
+          max-active: 8 #最大连接数
+          max-wait: -1    #最大阻塞等待时间(负数表示没限制)
+          max-idle: 5    #最大空闲
+          min-idle: 0     #最小空闲
+#  profiles:
+#    active: prod  # 激活： 生效 = 默认 + 激活
+#    #集群
+#    redis:
+#      cluster:
+#        nodes: 192.168.111.185:6381,192.168.111.185:6382,192.168.111.172:6383,192.168.111.172:6384,192.168.111.184:6385,192.168.111.184:6386
+#        max-redirects: 3
+#      password:
+#      lettuce:
+#        cluster:
+#          refresh:
+#            adaptive: true
+#            period: 2000
+#        pool:
+#          max-active: 8 #最大连接数
+#          max-wait: -1    #最大阻塞等待时间(负数表示没限制)
+#          max-idle: 5    #最大空闲
+#          min-idle: 0     #最小空闲
