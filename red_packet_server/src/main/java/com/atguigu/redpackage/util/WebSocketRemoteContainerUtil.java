@@ -4,7 +4,7 @@ package com.atguigu.redpackage.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.atguigu.redpackage.constant.Constant;
-import com.atguigu.redpackage.model.RedPackgeVo;
+import com.atguigu.redpackage.beans.vo.RedPackgeVo;
 import jakarta.websocket.Session;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;

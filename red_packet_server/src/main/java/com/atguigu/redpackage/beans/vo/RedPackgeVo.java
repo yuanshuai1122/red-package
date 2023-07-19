@@ -1,9 +1,7 @@
-package com.atguigu.redpackage.model;
+package com.atguigu.redpackage.beans.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-
-import java.util.Date;
 
 @Data
 @Schema(description = "红包雨活动信息类")

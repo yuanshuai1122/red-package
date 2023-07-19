@@ -1,8 +1,7 @@
 package com.atguigu.redpackage.controller;
 
 import com.atguigu.redpackage.constant.Constant;
-import com.atguigu.redpackage.model.RedPackgeDto;
-import com.atguigu.redpackage.model.RedPackgeVo;
+import com.atguigu.redpackage.beans.vo.RedPackgeVo;
 import com.atguigu.redpackage.util.WebSocketRemoteContainerUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.websocket.*;
@@ -12,9 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.Date;
 
 /**
  * WebSocket接口测试工具：http://www.jsons.cn/websocket/

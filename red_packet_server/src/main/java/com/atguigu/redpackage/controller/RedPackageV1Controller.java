@@ -1,21 +1,21 @@
 package com.atguigu.redpackage.controller;
 
-import cn.hutool.core.util.IdUtil;
-import com.alibaba.fastjson.JSON;
+import com.atguigu.redpackage.beans.dto.SendRedPackageDto;
 import com.atguigu.redpackage.common.Result;
 import com.atguigu.redpackage.common.ResultCodeEnum;
 import com.atguigu.redpackage.constant.Constant;
-import com.atguigu.redpackage.util.RedPackageUtil;
+import com.atguigu.redpackage.service.RedPackageV1Service;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @auther zzyy
@@ -25,25 +25,18 @@ import java.util.concurrent.TimeUnit;
 @Tag(name = "红包雨接口管理v1")
 @RestController
 @RequestMapping(value = "/api/v1")
-public class RedPackageController {
+public class RedPackageV1Controller {
 
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Operation(summary = "发红包")
-    @GetMapping(value = "/send/{totalMoney}/{redPackageNumber}")
-    public Result<String> sendRedPackage(@Parameter(name = "totalMoney", description = "红包金额", required = true) @PathVariable int totalMoney,
-                                         @Parameter(name = "redPackageNumber", description = "红包个数", required = true) @PathVariable int redPackageNumber) {
-        //1 拆红包，将总金额totalMoney拆分为redPackageNumber个子红包
-        Integer[] splitRedPackages = RedPackageUtil.splitRedPackageAlgorithm(totalMoney, redPackageNumber);
-        log.info("拆红包: {}", JSON.toJSONString(splitRedPackages));
-        //2 发红包并保存进list结构里面且设置过期时间
-        String key = IdUtil.simpleUUID();
-        redisTemplate.opsForList().leftPushAll(Constant.RED_PACKAGE_KEY + key, splitRedPackages);
-        redisTemplate.expire(Constant.RED_PACKAGE_KEY + key, 1, TimeUnit.DAYS);
+    @Autowired
+    private RedPackageV1Service redPackageV1Service;
 
-        //3 发红包OK，返回前台显示
-        return Result.build(key, ResultCodeEnum.SUCCESS);
+    @Operation(summary = "发红包")
+    @GetMapping(value = "/send")
+    public Result<String> sendRedPackage(@Valid @RequestBody SendRedPackageDto dto) {
+        return redPackageV1Service.sendRedPackage(dto);
     }
 
     @Operation(summary = "抢红包")

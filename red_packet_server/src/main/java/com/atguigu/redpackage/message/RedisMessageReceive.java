@@ -1,7 +1,7 @@
 package com.atguigu.redpackage.message;
 
 import com.alibaba.fastjson.JSON;
-import com.atguigu.redpackage.model.RedPackgeVo;
+import com.atguigu.redpackage.beans.vo.RedPackgeVo;
 import com.atguigu.redpackage.util.WebSocketRemoteContainerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
