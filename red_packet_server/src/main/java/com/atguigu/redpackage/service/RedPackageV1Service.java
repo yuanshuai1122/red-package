@@ -38,7 +38,7 @@ public class RedPackageV1Service {
     public Result<String> sendRedPackage(SendRedPackageDto dto) {
         //1 拆红包，将总金额totalMoney拆分为redPackageNumber个子红包
         BigDecimal totalMoney = new BigDecimal(dto.getTotalMoney());
-        Integer[] splitRedPackages = RedPackageUtil.splitRedPackageAlgorithm(totalMoney, dto.getRedPackageNumber());
+        BigDecimal[] splitRedPackages = RedPackageUtil.splitRedPackageAlgorithm(totalMoney, dto.getRedPackageNumber());
         log.info("拆红包: {}", JSON.toJSONString(splitRedPackages));
         //2 发红包并保存进list结构里面且设置过期时间
         String key = IdUtil.simpleUUID();

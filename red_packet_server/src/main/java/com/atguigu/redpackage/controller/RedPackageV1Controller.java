@@ -33,8 +33,14 @@ public class RedPackageV1Controller {
     @Autowired
     private RedPackageV1Service redPackageV1Service;
 
-    @Operation(summary = "发红包")
-    @GetMapping(value = "/send")
+
+    /**
+     * 发红包
+     *
+     * @param dto DTO 发红包参数
+     * @return {@link Result}<{@link String}>
+     */
+    @PostMapping(value = "/send")
     public Result<String> sendRedPackage(@Valid @RequestBody SendRedPackageDto dto) {
         return redPackageV1Service.sendRedPackage(dto);
     }

@@ -17,6 +17,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -56,7 +57,7 @@ public class RedPackageV2Controller {
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         executor.schedule(() -> {
             //2.2.1 活动开始，拆红包，将总金额totalMoney拆分为redPackageNumber个子红包
-            Integer[] splitRedPackages = RedPackageUtil.splitRedPackageAlgorithm(redPackgeDto.getTotalMoney(), redPackgeDto.getRedPackageNumber());//拆分红包算法通过后获得的多个子红包数组
+            BigDecimal[] splitRedPackages = RedPackageUtil.splitRedPackageAlgorithm(new BigDecimal(String.valueOf(redPackgeDto.getTotalMoney())), redPackgeDto.getRedPackageNumber());//拆分红包算法通过后获得的多个子红包数组
             log.info("拆红包: {}", JSON.toJSONString(splitRedPackages));
             // 2.2.2 红包并保存进list结构里面且设置过期时间
             String key = IdUtil.simpleUUID();
