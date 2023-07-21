@@ -1,8 +1,6 @@
 package vip.yuanshuai.redpackage.beans.dto;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -18,13 +16,18 @@ public class SendRedPackageDto {
      * 总金额
      */
     @NotBlank(message = "总金额不能为空")
-    private String totalMoney;
+    private String totalAmount;
 
     /**
      * 拆分红包个数
      */
-    @NotNull(message = "红包个数不能为空")
-    @Min(value = 1, message = "至少拆分一个红包")
-    private Integer redPackageNumber;
+    @NotBlank(message = "拆红包个数不能为空")
+    private String redPackageNums;
+
+    /**
+     * 每个红包最小金额
+     */
+    @NotBlank(message = "红包最小金额不能为空")
+    private String minAmount;
 
 }

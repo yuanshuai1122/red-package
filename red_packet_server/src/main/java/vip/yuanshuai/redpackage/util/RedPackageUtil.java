@@ -1,8 +1,13 @@
 package vip.yuanshuai.redpackage.util;
 
+import org.springframework.util.Assert;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * 拆红包的算法工具类
@@ -34,4 +39,58 @@ public class RedPackageUtil {
         }
         return redPackageNumbers;
     }
+
+    /**
+     * 抢红包方法
+     *
+     * @param amount 总金额
+     * @param min    每个红包最小值
+     * @param num    红包数
+     *///模拟抢红包过程
+    public static List<BigDecimal> splitRedPackage(BigDecimal amount, BigDecimal min, BigDecimal num){
+        List<BigDecimal> split = new ArrayList<>();
+        BigDecimal remain = amount.subtract(min.multiply(num));
+        final Random random = new Random();
+        final BigDecimal hundred = new BigDecimal("100");
+        final BigDecimal two = new BigDecimal("2");
+        BigDecimal sum = BigDecimal.ZERO;
+        BigDecimal redpeck;
+        for (int i = 0; i < num.intValue(); i++) {
+            final int nextInt = random.nextInt(100);
+            if(i == num.intValue() -1){
+                redpeck = remain;
+            }else{
+                //RoundingMode.CEILING：取右边最近的整数
+                //RoundingMode.FLOOR：取左边最近的正数
+                redpeck = new BigDecimal(nextInt).multiply(remain.multiply(two).divide(num.subtract(new BigDecimal(i)),2, RoundingMode.CEILING)).divide(hundred,2, RoundingMode.FLOOR);
+            }
+            if(remain.compareTo(redpeck) > 0){
+                remain = remain.subtract(redpeck);
+            }else{
+                remain = BigDecimal.ZERO;
+            }
+            sum = sum.add(min.add(redpeck));
+            // 添加到List
+            split.add(min.add(redpeck));
+        }
+        Assert.isTrue(compare(amount, sum), "切分红包出现异常");
+        return split;
+    }
+
+    private static boolean compare(BigDecimal a, BigDecimal b){
+        if(a.compareTo(b) == 0){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 生成UUID
+     *
+     * @return {@link String}
+     */
+    public static String generateUUID() {
+        return UUID.randomUUID().toString();
+    }
+
 }

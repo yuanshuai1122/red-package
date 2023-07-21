@@ -2,10 +2,6 @@ package vip.yuanshuai.redpackage;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import vip.yuanshuai.redpackage.util.RedPackageUtil;
-
-import java.math.BigDecimal;
-import java.util.Arrays;
 
 /**
  * @auther zzyy

@@ -1,12 +1,12 @@
 package vip.yuanshuai.redpackage.message;
 
-import vip.yuanshuai.redpackage.constant.Constant;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
+import vip.yuanshuai.redpackage.constant.Constant;
 
 /**
  * redis广播通知配置类：订阅发布

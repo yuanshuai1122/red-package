@@ -1,14 +1,12 @@
 package vip.yuanshuai.redpackage.util;
 
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import vip.yuanshuai.redpackage.constant.Constant;
-import vip.yuanshuai.redpackage.beans.vo.RedPackgeVo;
+import com.google.gson.Gson;
 import jakarta.websocket.Session;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
+import vip.yuanshuai.redpackage.beans.vo.RedPackgeVo;
+import vip.yuanshuai.redpackage.constant.Constant;
 
 import java.util.Map;
 import java.util.Set;
@@ -57,12 +55,12 @@ public class WebSocketRemoteContainerUtil {
      */
     public static void sendMsg(RedPackgeVo redPackgeVo, RedisTemplate redisTemplate) {
         Set<String> tokenSet = WebSocketRemoteContainerUtil.getActivityTokenList(redPackgeVo.getActivityKey(), redisTemplate);
-        log.info("接收人：{}", JSON.toJSONString(tokenSet));
+        log.info("接收人：{}", new Gson().toJson(tokenSet));
         if (!CollectionUtils.isEmpty(tokenSet)) {
             for (String token : tokenSet) {
                 Session session = WebSocketRemoteContainerUtil.getSession(token);
                 if (null != session) {
-                    session.getAsyncRemote().sendText(JSON.toJSONString(redPackgeVo, SerializerFeature.DisableCircularReferenceDetect));//异步发送消息.
+                    session.getAsyncRemote().sendText(new Gson().toJson(redPackgeVo));//异步发送消息.
                     //记录用户已开启
                     redisTemplate.opsForHash().put(Constant.RED_PACKAGE_USER_KEY + redPackgeVo.getActivityKey(), token, 1);
                     //设置过期时间
@@ -80,7 +78,7 @@ public class WebSocketRemoteContainerUtil {
      * @param redisTemplate
      */
     public static void sendMsg(Session session, String token, RedPackgeVo redPackgeVo, RedisTemplate redisTemplate) {
-        session.getAsyncRemote().sendText(JSON.toJSONString(redPackgeVo, SerializerFeature.DisableCircularReferenceDetect));//异步发送消息.
+        session.getAsyncRemote().sendText(new Gson().toJson(redPackgeVo));//异步发送消息.
         //记录用户已开启
         redisTemplate.opsForHash().put(Constant.RED_PACKAGE_USER_KEY + redPackgeVo.getActivityKey(), token, 1);
         //设置过期时间

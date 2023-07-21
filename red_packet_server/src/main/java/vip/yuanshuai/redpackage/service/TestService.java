@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import vip.yuanshuai.redpackage.util.RedPackageUtil;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * @program: red-package
@@ -21,12 +21,10 @@ public class TestService implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        BigDecimal[] bigDecimals = RedPackageUtil.splitRedPackageAlgorithm(new BigDecimal("200"), 5);
-        BigDecimal bigDecimal = new BigDecimal("0");
-        for (BigDecimal decimal : bigDecimals) {
-            bigDecimal.add(decimal);
-        }
-        log.info(String.valueOf(bigDecimal));
-        log.info(Arrays.toString(bigDecimals));
+        BigDecimal totalAmount = new BigDecimal("100");
+        BigDecimal minAmount = new BigDecimal("0.01");
+        BigDecimal nums = new BigDecimal("10");
+        List<BigDecimal> bigDecimals = RedPackageUtil.splitRedPackage(totalAmount, minAmount, nums);
+        System.out.println(bigDecimals);
     }
 }

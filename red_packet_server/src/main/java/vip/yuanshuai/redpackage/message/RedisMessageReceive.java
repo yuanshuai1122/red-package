@@ -1,11 +1,11 @@
 package vip.yuanshuai.redpackage.message;
 
-import com.alibaba.fastjson.JSON;
-import vip.yuanshuai.redpackage.beans.vo.RedPackgeVo;
-import vip.yuanshuai.redpackage.util.WebSocketRemoteContainerUtil;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import vip.yuanshuai.redpackage.beans.vo.RedPackgeVo;
+import vip.yuanshuai.redpackage.util.WebSocketRemoteContainerUtil;
 
 /**
  * redis广播消息处理类
@@ -24,7 +24,7 @@ public class RedisMessageReceive {
         //序列化消息
         Object msg = redisTemplate.getValueSerializer().deserialize(message.getBytes());
         if (null != msg) {
-            RedPackgeVo redPackgeVo = JSON.parseObject(msg.toString(), RedPackgeVo.class);
+            RedPackgeVo redPackgeVo = new Gson().fromJson(msg.toString(), RedPackgeVo.class);
             //WebSocket发送消息
             WebSocketRemoteContainerUtil.sendMsg(redPackgeVo, redisTemplate);
         }

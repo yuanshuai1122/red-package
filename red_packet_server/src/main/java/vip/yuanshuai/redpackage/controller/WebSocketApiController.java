@@ -1,23 +1,28 @@
 package vip.yuanshuai.redpackage.controller;
 
-import vip.yuanshuai.redpackage.constant.Constant;
-import vip.yuanshuai.redpackage.beans.vo.RedPackgeVo;
-import vip.yuanshuai.redpackage.util.WebSocketRemoteContainerUtil;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.websocket.*;
+import jakarta.websocket.OnClose;
+import jakarta.websocket.OnError;
+import jakarta.websocket.OnOpen;
+import jakarta.websocket.Session;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import vip.yuanshuai.redpackage.beans.vo.RedPackgeVo;
+import vip.yuanshuai.redpackage.constant.Constant;
+import vip.yuanshuai.redpackage.util.WebSocketRemoteContainerUtil;
 
 /**
+ * 即时通讯接口管理
  * WebSocket接口测试工具：http://www.jsons.cn/websocket/
  * 接口地址：ws://139.198.163.91:8888/api/websocket/{activityKey}/{token}
+ *
+ * @author yuanshuai
+ * @date 2023/07/21
  */
 @Slf4j
-@Tag(name = "即时通讯接口管理")
 @ServerEndpoint(value = "/api/websocket/{activityKey}/{token}")
 @Component
 public class WebSocketApiController {
