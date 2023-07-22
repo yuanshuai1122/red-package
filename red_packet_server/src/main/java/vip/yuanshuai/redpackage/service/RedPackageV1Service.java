@@ -49,4 +49,34 @@ public class RedPackageV1Service {
         //3 发红包OK，返回前台显示
         return Result.build(key, ResultCodeEnum.SUCCESS);
     }
+
+    /**
+     * 抢红包
+     *
+     * @param redPackageKey 红包密钥
+     * @param token         token
+     * @return {@link Result}
+     */
+    public Result robRedPackage(String redPackageKey, String token) {
+        //1 验证某个用户是否抢过红包，不可以多抢
+        Object redPackage = redisTemplate.opsForHash().get(Constant.RED_PACKAGE_CONSUME_KEY + redPackageKey, token);
+        //2 没有抢过可以去抢红包，否则返回-2表示该用户抢过红包了
+        if (null == redPackage) {
+            //2.1 从红包池(list)里面出队一个作为该客户抢的红包，抢到了一个红包
+            Object partRedPackage = redisTemplate.opsForList().leftPop(Constant.RED_PACKAGE_KEY + redPackageKey);
+            if (partRedPackage != null) {
+                //2.2 抢到红包后需要记录进入hash结构，表示谁抢到了多少钱的某个子红包
+                redisTemplate.opsForHash().put(Constant.RED_PACKAGE_CONSUME_KEY + redPackageKey, token, partRedPackage);
+                log.info("用户:{} 抢到了多少钱的红包：{}", token, partRedPackage);
+                //TODO 后续异步进mysql或者MQ进一步做统计处理,每一年你发出多少红包，抢到了多少红包，年度总结
+                return Result.build(partRedPackage, ResultCodeEnum.SUCCESS);
+            }
+            // 抢完了
+            log.info("红包池已抢空，红包标识：{}", redPackageKey);
+            return Result.build(null, ResultCodeEnum.RED_PACKAGE_FINISHED);
+        }
+        //3 某个用户抢过了，不可以作弊抢多次
+        return Result.build(null, ResultCodeEnum.RED_PACKAGE_REAPT);
+
+    }
 }

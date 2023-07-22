@@ -7,8 +7,6 @@ f
 Xred_packet_adminui/src/views/luckyMoney/components/showOrAddDetails/showOrAddDetails.vue,2/c/2c3460aebb97e39a82703c2d6fb7d5aa00de336c
 O
 red_packet_adminui/package.json,b/0/b01df3231da440c7fb1dd6b47f9febffa658073d
-
-Ored_packet_server/src/main/java/vip/yuanshuai/redpackage/config/CorsConfig.java,1/b/1baec4fb58d5a8c32aeb5166d171e33dc37398d6
 Œ
 \red_packet_server/src/main/java/vip/yuanshuai/redpackage/controller/RedisTestController.java,7/0/70b623c2d0e5aee35ccd408092f6a2265d7dae81
 |

@@ -9,8 +9,6 @@ f
 6red_packet_adminui/src/views/luckyMoney/luckyMoney.vue,e/5/e5f9fb05a8c1bf099ce614d4dc162d603a3a017e
 …
 Ured_packet_server/src/main/java/vip/yuanshuai/redpackage/message/WebSocketConfig.java,0/f/0ff0089d207f06912e56d03b9aa33b6463b8554e
-
-Ored_packet_server/src/main/java/vip/yuanshuai/redpackage/config/CorsConfig.java,1/b/1baec4fb58d5a8c32aeb5166d171e33dc37398d6
 |
 Lred_packet_server/src/test/java/vip/yuanshuai/redpackage/RedPackageTest.java,3/1/31d85656d025104dcc8b578a07019f140601acf7
 Œ
