@@ -12,6 +12,7 @@ import vip.yuanshuai.redpackage.constant.Constant;
 import vip.yuanshuai.redpackage.service.RedPackageV1Service;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 
 /**
@@ -74,16 +75,22 @@ public class RedPackageV1Controller {
 
         return redPackageV1Service.robRedPackage(redPackageKey, token);
     }
-//
-//    @Operation(summary = "领取记录")
-//    @GetMapping(value = "/record1/{redPackageKey}")
-//    public Result<Object> redPackageRecord1(@Parameter(name = "redPackageKey", description = "红包标识", required = true) @PathVariable String redPackageKey,
-//                                            @Parameter(name = "token", description = "用户标识", required = true) @RequestHeader("token") String token) {
-//        Map<String, Integer> map = redisTemplate.opsForHash().entries(Constant.RED_PACKAGE_CONSUME_KEY + redPackageKey);
-//        //当前用户的领取金额
-//        //return Result.build(map.get(token), ResultCodeEnum.SUCCESS);
-//        //全部用户的领取金额
-//        return Result.build(map, ResultCodeEnum.SUCCESS);
-//    }
+
+
+    /**
+     * 领取记录
+     *
+     * @param redPackageKey 红包密钥
+     * @param token         令牌
+     * @return {@link Result}<{@link Object}>
+     */
+    @GetMapping(value = "/record")
+    public Result<Object> redPackageRecord1(@RequestParam("redPackageKey") String redPackageKey, @RequestHeader("token") String token) {
+        Map<String, Integer> map = redisTemplate.opsForHash().entries(Constant.RED_PACKAGE_CONSUME_KEY + redPackageKey);
+        //当前用户的领取金额
+        //return Result.build(map.get(token), ResultCodeEnum.SUCCESS);
+        //全部用户的领取金额
+        return Result.build(map, ResultCodeEnum.SUCCESS);
+    }
 
 }
